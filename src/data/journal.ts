@@ -76,13 +76,7 @@ export const articles: Article[] = [
     publishedOn: "2026-11-12",
     relatedDesigns: ["RS-026", "RS-009", "RS-025"],
     relatedCollection: "modern-bibiyaan-de-designs",
-    sources: [
-      {
-        label: "Ministry of Textiles, Office of the Development Commissioner (Handicrafts) — Phulkari",
-        url: "https://handicrafts.gov.in/crafts/All_Crafts/Craft_Categories/Textile/Embroidery/Phulkari/Phulkariwebpage.html",
-      },
-      { label: "Philadelphia Museum of Art — Phulkari collection", url: "https://philamuseum.org/collection/curated/phulkari" },
-    ],
+    sources: [{ label: "Wikipedia — Phulkari", url: "https://en.wikipedia.org/wiki/Phulkari" }],
     body: [
       {
         type: "p",

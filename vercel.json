@@ -2,9 +2,26 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
-      "source": "/collections/old-bibiyaan-de-designs/:path*",
+      "source": "/collections/old-bibiyaan-de-designs",
       "destination": "/collections/modern-bibiyaan-de-designs/",
       "permanent": true
+    },
+    {
+      "source": "/collections/old-bibiyaan-de-designs/",
+      "destination": "/collections/modern-bibiyaan-de-designs/",
+      "permanent": true
+    },
+    {
+      "source": "/index.txt",
+      "missing": [{ "type": "header", "key": "rsc" }],
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/:path*/index.txt",
+      "missing": [{ "type": "header", "key": "rsc" }],
+      "destination": "/:path*/",
+      "permanent": false
     }
   ]
 }
