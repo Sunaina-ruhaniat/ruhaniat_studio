@@ -23,6 +23,17 @@ const occasions = [
 const MAX_FILES = 5;
 const MAX_FILE_MB = 10;
 
+const currencies = [
+  { code: "INR", symbol: "₹" },
+  { code: "USD", symbol: "US$" },
+  { code: "CAD", symbol: "C$" },
+  { code: "GBP", symbol: "£" },
+  { code: "AUD", symbol: "A$" },
+  { code: "EUR", symbol: "€" },
+  { code: "AED", symbol: "AED " },
+  { code: "NZD", symbol: "NZ$" },
+];
+
 type Values = {
   enquiryType: string;
   name: string;
@@ -32,6 +43,7 @@ type Values = {
   occasion: string;
   designRef: string;
   budget: string;
+  currency: string;
   requirements: string;
 };
 
@@ -46,7 +58,7 @@ function buildMessage(v: Values, fileCount: number) {
     categoryLabel && `Outfit category: ${categoryLabel}`,
     v.occasion && `Occasion: ${v.occasion}`,
     v.designRef && `Design reference: ${v.designRef}`,
-    v.budget && `Budget: ${v.budget}`,
+    v.budget && `Budget: ${currencies.find((c) => c.code === v.currency)?.symbol ?? ""}${v.budget.trim()} (${v.currency})`,
     v.requirements && `Additional requirements: ${v.requirements}`,
     fileCount > 0 && `I have ${fileCount} reference image${fileCount > 1 ? "s" : ""} to share.`,
   ];
@@ -68,8 +80,10 @@ export function EnquiryForm() {
     occasion: "",
     designRef: "",
     budget: "",
+    currency: "INR",
     requirements: "",
   });
+  const [canShareFiles, setCanShareFiles] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
@@ -87,6 +101,23 @@ export function EnquiryForm() {
       category: design?.category ?? (cat && categories.some((c) => c.slug === cat) ? cat : v.category),
     }));
   }, [params]);
+
+  // Phones (and some desktops) can share photos straight into a WhatsApp chat.
+  useEffect(() => {
+    try {
+      setCanShareFiles(files.length > 0 && typeof navigator.canShare === "function" && navigator.canShare({ files }));
+    } catch {
+      setCanShareFiles(false);
+    }
+  }, [files]);
+
+  async function sharePhotos() {
+    try {
+      await navigator.share({ files, text: `Reference photos for ${values.name ? `${values.name}'s` : "my"} enquiry — Ruhaniat Studio` });
+    } catch {
+      /* the customer closed the share menu */
+    }
+  }
 
   const previews = useMemo(() => files.map((f) => ({ name: f.name, url: URL.createObjectURL(f) })), [files]);
   useEffect(() => () => previews.forEach((p) => URL.revokeObjectURL(p.url)), [previews]);
@@ -166,11 +197,40 @@ export function EnquiryForm() {
           {siteConfig.enquiryEndpoint
             ? "We have received your enquiry and will get back to you soon. For a quicker reply, you can also send it on WhatsApp."
             : "WhatsApp should have opened with your details. Just press send in the chat."}
-          {files.length > 0 && " Please attach your reference images in the WhatsApp chat."}
         </p>
-        <a href={waUrl} target="_blank" rel="noopener noreferrer" className={buttonClass("whatsapp", "mt-8")}>
+        <a href={waUrl} target="_blank" rel="noopener noreferrer" className={buttonClass(files.length ? "outline" : "whatsapp", "mt-8")}>
           <WhatsAppIcon /> {siteConfig.enquiryEndpoint ? "Send on WhatsApp" : "Open WhatsApp Again"}
         </a>
+        {files.length > 0 && (
+          <div className="mx-auto mt-8 max-w-md border-t border-line pt-8">
+            <p className="eyebrow">Step 2 · Your reference photos</p>
+            <ul className="mt-4 flex flex-wrap justify-center gap-2">
+              {previews.map((p) => (
+                <li key={p.url} className="h-20 w-16 overflow-hidden border border-line">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- local blob preview */}
+                  <img src={p.url} alt={p.name} className="h-full w-full object-cover" />
+                </li>
+              ))}
+            </ul>
+            {canShareFiles ? (
+              <>
+                <button type="button" onClick={sharePhotos} className={buttonClass("whatsapp", "mt-5 w-full")}>
+                  <WhatsAppIcon /> Send {files.length === 1 ? "Photo" : `${files.length} Photos`} to WhatsApp
+                </button>
+                <p className="mt-3 text-xs leading-relaxed text-muted">
+                  Choose <strong className="font-medium text-ink">WhatsApp</strong>, then pick the{" "}
+                  <strong className="font-medium text-ink">Ruhaniat Studio</strong> chat you just messaged.
+                </p>
+              </>
+            ) : (
+              <p className="mt-4 text-sm leading-relaxed text-muted">
+                WhatsApp links can only carry text, so please add the photos yourself: in the WhatsApp chat that just
+                opened, tap the <strong className="font-medium text-ink">📎 attach</strong> icon — or on a computer, drag
+                the photos into the chat.
+              </p>
+            )}
+          </div>
+        )}
         <button
           type="button"
           onClick={() => setStatus("idle")}
@@ -261,8 +321,16 @@ export function EnquiryForm() {
       </div>
       <div>
         <label htmlFor="f-budget" className={label}>Budget</label>
-        <input id="f-budget" className="field" value={values.budget} onChange={set("budget")}
-          placeholder="Your approximate budget" />
+        <div className="flex">
+          <select aria-label="Budget currency" className="field !w-[6.5rem] shrink-0 !pr-8 !bg-[length:0.9rem] !bg-[position:right_0.6rem_center] border-r-0"
+            value={values.currency} onChange={set("currency")}>
+            {currencies.map((c) => (
+              <option key={c.code} value={c.code}>{c.code}</option>
+            ))}
+          </select>
+          <input id="f-budget" className="field" inputMode="decimal" value={values.budget} onChange={set("budget")}
+            placeholder="e.g. 5,000" />
+        </div>
       </div>
       <div className="sm:col-span-2">
         <label htmlFor="f-requirements" className={label}>Additional Requirements</label>
@@ -308,7 +376,7 @@ export function EnquiryForm() {
         )}
         {!siteConfig.enquiryEndpoint && files.length > 0 && (
           <p className="mt-3 text-xs text-muted">
-            WhatsApp links can&apos;t carry photos automatically — once the chat opens, please attach these images there.
+            After you send your details, we&apos;ll help you share these photos into the WhatsApp chat — on phones it&apos;s one tap.
           </p>
         )}
       </div>
