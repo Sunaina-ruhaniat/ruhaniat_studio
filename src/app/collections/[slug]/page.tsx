@@ -74,7 +74,7 @@ export default async function CategoryPage({ params }: Props) {
             </p>
           </div>
           {items.length > 0 ? (
-            <div className="grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-10 sm:gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
               {items.map((d, i) => (
                 <DesignCard key={d.ref} design={d} priority={i < 2} />
               ))}

@@ -251,7 +251,7 @@ export default async function ArticlePage({ params }: Props) {
             <p className="eyebrow text-center">Related Designs</p>
             <h2 className="mt-3 text-center text-4xl text-burgundy-deep">Designs that go with this story</h2>
             <Ornament className="mx-auto mt-5 text-gold" />
-            <div className="mt-12 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-12 grid grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-10 sm:gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
               {related.map((d, i) => (
                 <DesignCard key={d.ref} design={d} index={i} />
               ))}

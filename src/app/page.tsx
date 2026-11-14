@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CategoryCard } from "@/components/CategoryCard";
-import { DesignCard } from "@/components/DesignCard";
 import { GarmentArt } from "@/components/GarmentArt";
 import { InspirationExplorer } from "@/components/InspirationExplorer";
 import { PlainFabricToSuit } from "@/components/PlainFabricToSuit";
@@ -31,7 +30,6 @@ function RevealWords({ text, start = 0, className = "" }: { text: string; start?
 }
 
 export default function HomePage() {
-  const latest = designsByCategory("latest-designs");
   const heritageDesigns = designsByCategory("modern-bibiyaan-de-designs").slice(0, 3);
   const heritageArt = [heritageElements[0], heritageElements[4], heritageElements[6]];
 
@@ -132,7 +130,7 @@ export default function HomePage() {
         <div className="container-luxe py-20 md:py-28">
           <div data-reveal>
             <SectionHeading
-              eyebrow="Featured Suit Designs"
+              eyebrow="Featured & Latest Designs"
               title={
                 <>
                   Not Sure What to Stitch? <em className="text-burgundy">Get Inspired!</em>
@@ -237,28 +235,6 @@ export default function HomePage() {
                 </Link>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6 ── Latest Design Inspirations ──────────────────── */}
-      <section className="bg-ivory">
-        <div className="container-luxe py-20 md:py-28">
-          <div data-reveal className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading
-              align="left"
-              eyebrow="Recently Added"
-              title="Latest Design Inspirations"
-              intro="Contemporary cuts we've added to our design library. Like one? Tap enquire and the design reference is added to your WhatsApp message."
-            />
-            <ButtonLink href="/collections/latest-designs" variant="outline" className="shrink-0">
-              View All Latest
-            </ButtonLink>
-          </div>
-          <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {latest.map((d, i) => (
-              <DesignCard key={d.ref} design={d} index={i} />
-            ))}
           </div>
         </div>
       </section>

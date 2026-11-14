@@ -114,7 +114,7 @@ export default async function DesignPage({ params }: Props) {
           <div className="container-luxe py-16 md:py-20">
             <h2 className="text-center text-4xl text-burgundy-deep">More from {catName}</h2>
             <Ornament className="mx-auto mt-5 text-gold" />
-            <div className="mt-12 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-12 grid grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-10 sm:gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
               {related.map((d) => (
                 <DesignCard key={d.ref} design={d} />
               ))}

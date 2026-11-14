@@ -40,7 +40,7 @@ export function JournalTeaser() {
   );
 }
 
-const lookTeaser = pick(["RS-009", "RS-026", "RS-013", "RS-005", "RS-018", "RS-021", "RS-034"]);
+const lookTeaser = pick(["RS-012", "RS-026", "RS-013", "RS-005", "RS-018", "RS-021", "RS-034"]);
 
 export function LookbookTeaser() {
   return (
@@ -96,7 +96,7 @@ export function InstagramSection() {
           <Ornament className="mx-auto mt-5 text-gold" />
           <p className="mt-5 leading-relaxed text-muted">
             {hasInsta
-              ? "New design ideas, fabric finds and behind-the-scenes from our stitching table."
+              ? "We're new on Instagram — follow us for design ideas, styling tips and Punjabi heritage, with our first stitched pieces coming soon."
               : "Our Instagram is coming soon. Until then, here are a few of our design ideas — and WhatsApp is the quickest way to see new designs."}
           </p>
         </div>

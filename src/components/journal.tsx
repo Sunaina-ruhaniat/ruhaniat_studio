@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { GarmentArt } from "./GarmentArt";
 import { articles, journalCategories, journalThemes, readingTime, type Article, type JournalCategory } from "@/data/journal";
 
-const issueNo = (a: Article) => String(articles.indexOf(a) + 1).padStart(2, "0");
+// Match by slug: cards rendered from server pages receive a copy of the article object.
+const issueNo = (a: Article) => String(articles.findIndex((x) => x.slug === a.slug) + 1).padStart(2, "0");
 
 /**
  * Editorial cover: the article's sketch inside an arch window, with the story number

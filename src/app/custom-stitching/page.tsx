@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 import { BringYourFabric } from "@/components/BringYourFabric";
 import { GarmentArt } from "@/components/GarmentArt";
@@ -119,6 +120,14 @@ export default function CustomStitchingPage() {
           <div>
             <p className="eyebrow mb-4">Pricing</p>
             <h2 className="text-4xl text-burgundy-deep">Every quote is personal</h2>
+            {siteConfig.stitchingFrom && (
+              <p className="mt-4 font-serif text-2xl text-burgundy">
+                Stitching from {siteConfig.stitchingFrom}
+                <span className="mt-1 block font-sans text-xs uppercase tracking-[0.18em] text-muted">
+                  Simple suit, your own fabric · final price depends on design and detailing
+                </span>
+              </p>
+            )}
             <Ornament className="mt-5 text-gold" />
             <p className="mt-6 leading-relaxed text-muted">
               Because each outfit is made to order, the cost depends on the design, the amount of detailing, the fabric

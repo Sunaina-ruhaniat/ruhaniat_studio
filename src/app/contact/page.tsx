@@ -58,7 +58,11 @@ export default function ContactPage() {
                   .
                 </li>
                 <li>Quote a design reference like RS-001 so we know exactly which design you mean.</li>
-                <li>Every price is quoted personally, based on your design, fabric and detailing.</li>
+                <li>
+                  {siteConfig.stitchingFrom ? `Stitching starts from ${siteConfig.stitchingFrom}; the` : "Every"}{" "}
+                  {siteConfig.stitchingFrom ? "final price is" : "price is"} quoted personally, based on your design, fabric and
+                  detailing.
+                </li>
               </ul>
             </div>
           </aside>

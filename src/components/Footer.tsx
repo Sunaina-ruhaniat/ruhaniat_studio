@@ -78,7 +78,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-ivory/10">
-        <div className="container-luxe flex flex-col items-center justify-between gap-3 py-6 text-xs text-ivory/50 md:flex-row">
+        <div className="container-luxe flex flex-col items-center justify-between gap-3 pb-24 pt-6 text-xs text-ivory/50 md:flex-row md:pb-6 md:pr-56">
           <p>© {year} Ruhaniat Studio. All rights reserved.</p>
           <Ornament className="text-gold/60" />
           <p>Design images shown are sample illustrations.</p>

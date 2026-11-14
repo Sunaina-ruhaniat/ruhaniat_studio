@@ -32,6 +32,13 @@ export const siteConfig = {
    * When empty, the form sends the enquiry through WhatsApp only.
    */
   enquiryEndpoint: process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT ?? "",
+
+  /**
+   * Lowest stitching price you will always honour, e.g. "₹800" (customer's own fabric,
+   * simple suit). Shown as "Stitching from ₹800" on the Custom Stitching and Contact pages.
+   * Leave empty to show no price.
+   */
+  stitchingFrom: "",
 } as const;
 
 export const mainNav = [

@@ -51,7 +51,7 @@ export function InspirationExplorer({ limit, showAllLink = false }: { limit?: nu
         ))}
       </div>
 
-      <div key={filter} className="mt-12 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+      <div key={filter} className="mt-12 grid grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-10 sm:gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((d, i) => (
           <div key={d.ref} className={limit && i >= 4 ? "hidden sm:block" : ""}>
             <DesignCard design={d} index={i} />

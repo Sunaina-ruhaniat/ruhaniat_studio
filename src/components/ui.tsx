@@ -79,12 +79,19 @@ export function SectionHeading({
   );
 }
 
-export function ConceptLabel({ className = "left-3 top-3" }: { className?: string }) {
+export function ConceptLabel({ className = "left-3 top-3", compact = false }: { className?: string; compact?: boolean }) {
   return (
     <span
       className={`pointer-events-none absolute z-[1] bg-burgundy/90 px-2 py-1 text-[0.58rem] font-medium uppercase tracking-[0.18em] text-ivory ${className}`}
     >
-      Ruhaniat Design Concept
+      {compact ? (
+        <>
+          <span className="sm:hidden">Design Concept</span>
+          <span className="hidden sm:inline">Ruhaniat Design Concept</span>
+        </>
+      ) : (
+        "Ruhaniat Design Concept"
+      )}
     </span>
   );
 }
